@@ -1,0 +1,2 @@
+module LeitnerCardBoxesHelper
+end
