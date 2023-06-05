@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Leitner card boxes</h1>
+
+<div id="leitner_card_boxes">
+  <% @leitner_card_boxes.each do |leitner_card_box| %>
+    <%= render leitner_card_box %>
+    <p>
+      <%= link_to "Show this leitner card box", leitner_card_box %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New leitner card box", new_leitner_card_box_path %>
