@@ -22,7 +22,9 @@ class CardsController < ApplicationController
   # POST /cards or /cards.json
   def create
     @card = Card.new(card_params)
-
+    @card.user = current_user
+    @card.leitner_card_box = LeitnerCardBox.where(repeat_period: LeitnerCardBox.minimum(:repeat_period)).first
+    
     respond_to do |format|
       if @card.save
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }

@@ -22,6 +22,7 @@ class LeitnerCardBoxesController < ApplicationController
   # POST /leitner_card_boxes or /leitner_card_boxes.json
   def create
     @leitner_card_box = LeitnerCardBox.new(leitner_card_box_params)
+    @leitner_card_box.user = current_user
 
     respond_to do |format|
       if @leitner_card_box.save
