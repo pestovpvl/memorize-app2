@@ -1,8 +1,12 @@
 require "test_helper"
 
 class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
+  # Include Devise test helpers
+  include Devise::Test::IntegrationHelpers
   setup do
     @leitner_card_box = leitner_card_boxes(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do

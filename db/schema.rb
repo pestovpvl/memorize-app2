@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_012552) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_152121) do
   create_table "cards", force: :cascade do |t|
     t.string "word"
     t.text "definition"
-    t.integer "leitner_card_box_id", null: false
+    t.integer "leitner_card_box_id"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

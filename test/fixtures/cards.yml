@@ -4,8 +4,10 @@ one:
   word: MyString
   definition: MyText
   leitner_card_box: one
+  user: one
 
 two:
   word: MyString
   definition: MyText
   leitner_card_box: two
+  user: two
