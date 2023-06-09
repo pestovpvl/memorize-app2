@@ -1,17 +1,10 @@
-<div id="<%= dom_id card %>">
-  <p>
-    <strong>Word:</strong>
-    <%= card.word %>
-  </p>
-
-  <p>
-    <strong>Definition:</strong>
-    <%= card.definition %>
-  </p>
-
-  <p>
-    <strong>Leitner card box:</strong>
-    <%= card.leitner_card_box_id %>
-  </p>
-
+<div id="<%= dom_id card %>" class="card col-3 mt-4 d m-auto" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-word"><%= card.word %></h5>
+    <p class="card-definition"><%= card.definition %></p>
+    <p class="card-leitner-card-box-id"> Repeat period: <%= card.leitner_card_box_id %></p>
+    <%= link_to 'Show', card %>
+    <%= link_to 'Edit', edit_card_path(card) %>
+    <%= link_to 'Destroy', card, data: { confirm: 'Are you sure?' }, method: :delete %>
+  </div>
 </div>

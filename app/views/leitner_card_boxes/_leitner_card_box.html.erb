@@ -1,12 +1,13 @@
-<div id="<%= dom_id leitner_card_box %>">
-  <p>
-    <strong>Repeat period:</strong>
-    <%= leitner_card_box.repeat_period %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= leitner_card_box.user_id %>
-  </p>
-
+<div id="<%= dom_id leitner_card_box %>" class="card col-3 mt-4 d m-auto" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="leitner-card-box__repeat_period">Repeat period:<%= leitner_card_box.repeat_period %></h5>
+    <ul>
+      <% leitner_card_box.cards.each do |card| %>
+        <li><%= card.word %></li>
+      <% end %>
+    </ul>
+    <%= link_to 'Show', leitner_card_box %>
+    <%= link_to 'Edit', edit_card_path(leitner_card_box) %>
+    <%= link_to 'Destroy', leitner_card_box, data: { confirm: 'Are you sure?' }, method: :delete %>
+  </div>
 </div>
