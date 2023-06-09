@@ -49,4 +49,25 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to leitner_card_boxes_url
   end
+
+  test "should create three leitner card boxes if user has none" do
+    @user.leitner_card_boxes.destroy_all
+
+    get leitner_card_boxes_url
+    assert_response :success
+
+    assert_equal 3, @user.leitner_card_boxes.count
+
+    expected_periods = [1, 3, 7]
+    @user.leitner_card_boxes.each do |leitner_card_box|
+      assert expected_periods.include?(leitner_card_box.repeat_period)
+    end
+  end
+
+  test "should not create three leitner card boxes if user has one" do
+    get leitner_card_boxes_url
+    assert_response :success
+
+    assert_equal 1, @user.leitner_card_boxes.count
+  end
 end
