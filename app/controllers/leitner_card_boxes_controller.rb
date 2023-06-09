@@ -1,9 +1,15 @@
 class LeitnerCardBoxesController < ApplicationController
   before_action :set_leitner_card_box, only: %i[ show edit update destroy ]
+  before_action :require_owner, only: %i[ show edit update destroy ]
 
   # GET /leitner_card_boxes or /leitner_card_boxes.json
   def index
-    @leitner_card_boxes = LeitnerCardBox.all
+    if current_user.leitner_card_boxes.empty?
+      [1,3,7].each do |days|
+        current_user.leitner_card_boxes.create(repeat_period: days)
+      end
+    end
+    @leitner_card_boxes = current_user.leitner_card_boxes
   end
 
   # GET /leitner_card_boxes/1 or /leitner_card_boxes/1.json
@@ -67,5 +73,11 @@ class LeitnerCardBoxesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def leitner_card_box_params
       params.require(:leitner_card_box).permit(:repeat_period, :user_id)
+    end
+
+    def require_owner
+      unless current_user == @leitner_card_box.user
+        redirect_to leitner_card_boxes_url, notice: "You are not authorized to do that."
+      end
     end
 end

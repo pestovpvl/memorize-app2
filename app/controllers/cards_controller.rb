@@ -1,9 +1,10 @@
 class CardsController < ApplicationController
   before_action :set_card, only: %i[ show edit update destroy ]
+  before_action :require_owner, only: %i[ show edit update destroy ]
 
   # GET /cards or /cards.json
   def index
-    @cards = Card.all
+    @cards = current_user.cards
   end
 
   # GET /cards/1 or /cards/1.json
@@ -68,5 +69,11 @@ class CardsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def card_params
       params.require(:card).permit(:word, :definition, :leitner_card_box_id)
+    end
+
+    def require_owner
+      unless current_user == @card.user
+        redirect_to cards_url, notice: "You are not authorized to perform this action."
+      end
     end
 end
