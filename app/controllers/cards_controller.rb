@@ -4,7 +4,7 @@ class CardsController < ApplicationController
 
   # GET /cards or /cards.json
   def index
-    @cards = Card.all
+    @cards = current_user.cards
   end
 
   # GET /cards/1 or /cards/1.json
@@ -73,7 +73,7 @@ class CardsController < ApplicationController
 
     def require_owner
       unless current_user == @card.user
-        redirect_to root_url, notice: "You are not authorized to perform this action."
+        redirect_to cards_url, notice: "You are not authorized to perform this action."
       end
     end
 end
