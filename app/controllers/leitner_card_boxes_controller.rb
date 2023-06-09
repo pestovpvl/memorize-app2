@@ -3,6 +3,11 @@ class LeitnerCardBoxesController < ApplicationController
 
   # GET /leitner_card_boxes or /leitner_card_boxes.json
   def index
+    if current_user.leitner_card_boxes.empty?
+      [1,3,7].each do |days|
+        current_user.leitner_card_boxes.create(repeat_period: days)
+      end
+    end
     @leitner_card_boxes = LeitnerCardBox.all
   end
 
