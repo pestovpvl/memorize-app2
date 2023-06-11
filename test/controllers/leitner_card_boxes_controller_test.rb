@@ -25,6 +25,7 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create leitner_card_box" do
+    @leitner_card_box.repeat_period = 10
     assert_difference("LeitnerCardBox.count") do
       post leitner_card_boxes_url, params: { leitner_card_box: { repeat_period: @leitner_card_box.repeat_period, user_id: @leitner_card_box.user_id } }
     end
@@ -43,6 +44,7 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update leitner_card_box" do
+    @leitner_card_box.repeat_period = 10
     patch leitner_card_box_url(@leitner_card_box), params: { leitner_card_box: { repeat_period: @leitner_card_box.repeat_period, user_id: @leitner_card_box.user_id } }
     assert_redirected_to leitner_card_box_url(@leitner_card_box)
   end
@@ -56,16 +58,13 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create three leitner card boxes if user has none" do
-    @user.leitner_card_boxes.destroy_all
+    new_user = User.create!(email: 'new_user@example.com', password: 'password', password_confirmation: 'password')
 
-    get leitner_card_boxes_url
-    assert_response :success
+    assert_equal 3, new_user.leitner_card_boxes.count
 
-    assert_equal 3, @user.leitner_card_boxes.count
-
-    expected_periods = [1, 3, 7]
-    @user.leitner_card_boxes.each do |leitner_card_box|
-      assert expected_periods.include?(leitner_card_box.repeat_period)
+    expected_repeat_periods = [1, 3, 7]
+    new_user.leitner_card_boxes.each do |box|
+      assert expected_repeat_periods.include?(box.repeat_period)
     end
   end
 
@@ -88,5 +87,9 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
     
     # Or if you handle this case with an error, check if the response is an error
     # assert_response :forbidden
+  end
+
+  test "should have unique repeat_period per user" do
+    
   end
 end
