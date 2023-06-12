@@ -1,7 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+box1:
+  repeat_period: 1
   user: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
-two:
-  user: two
+box2:
+  repeat_period: 3
+  user: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+box3:
+  repeat_period: 7
+  user: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

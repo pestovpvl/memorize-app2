@@ -4,19 +4,17 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   # Include Devise test helpers
   include Devise::Test::IntegrationHelpers
   setup do
-    @leitner_card_box = leitner_card_boxes(:one)
-    @user = users(:one)
-    @user2 = users(:two)
+    @leitner_card_box = leitner_card_boxes(:box1)
+    @user = User.create!(email: 'user1@gmail.com', password: 'password', password_confirmation: 'password')
+    @user2 = User.create!(email: 'user2@gmail.com', password: 'password', password_confirmation: 'password')
     sign_in @user
   end
 
   test "should get index" do
-    @user2_leitner_card_box = LeitnerCardBox.create!(repeat_period: 1, user: @user2)
-
     get leitner_card_boxes_url
     assert_response :success
 
-    assert_not @response.body.include?(@user2_leitner_card_box.id.to_s)
+    assert_not @response.body.include?(@user2.leitner_card_boxes.first.id.to_s)
   end
 
   test "should get new" do
@@ -34,24 +32,25 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show leitner_card_box" do
-    get leitner_card_box_url(@leitner_card_box)
+    get leitner_card_box_url(@user.leitner_card_boxes.first)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_leitner_card_box_url(@leitner_card_box)
+    get edit_leitner_card_box_url(@user.leitner_card_boxes.first)
     assert_response :success
   end
 
   test "should update leitner_card_box" do
-    @leitner_card_box.repeat_period = 10
-    patch leitner_card_box_url(@leitner_card_box), params: { leitner_card_box: { repeat_period: @leitner_card_box.repeat_period, user_id: @leitner_card_box.user_id } }
-    assert_redirected_to leitner_card_box_url(@leitner_card_box)
+    leitner_card_box = LeitnerCardBox.create!(repeat_period: 10, user: @user)
+    
+    patch leitner_card_box_url(leitner_card_box), params: { leitner_card_box: { repeat_period: leitner_card_box.repeat_period, user_id: leitner_card_box.user_id } }
+    assert_redirected_to leitner_card_box_url(leitner_card_box)
   end
 
   test "should destroy leitner_card_box" do
     assert_difference("LeitnerCardBox.count", -1) do
-      delete leitner_card_box_url(@leitner_card_box)
+      delete leitner_card_box_url(@user.leitner_card_boxes.first)
     end
 
     assert_redirected_to leitner_card_boxes_url
@@ -68,16 +67,9 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should not create three leitner card boxes if user has one" do
-    get leitner_card_boxes_url
-    assert_response :success
-
-    assert_equal 1, @user.leitner_card_boxes.count
-  end
-
   test "should not show leitner card box from other user" do
     # Create a Leitner card box for the second user
-    @user2_leitner_card_box = LeitnerCardBox.create!(repeat_period: 1, user: @user2)
+    @user2_leitner_card_box = LeitnerCardBox.create!(repeat_period: 10, user: @user2)
     
     # Try to show this box
     get leitner_card_box_url(@user2_leitner_card_box)

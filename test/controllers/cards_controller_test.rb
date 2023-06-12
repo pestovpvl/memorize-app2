@@ -4,10 +4,11 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   # Include Devise test helpers
   include Devise::Test::IntegrationHelpers
   setup do
-    @card = cards(:one)
+    
 
-    @user = users(:one)
-    @user2 = users(:two)
+    @user = User.create!(email: 'user1@gmail.com', password: 'password', password_confirmation: 'password')
+    @user2 = User.create!(email: 'user2@gmail.com', password: 'password', password_confirmation: 'password')
+    @card = Card.create!(word: "word", definition: "definition", leitner_card_box: @user.leitner_card_boxes.first, user: @user)
 
     sign_in @user
   end
@@ -35,7 +36,7 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show card" do
-    get card_url(@card)
+    get card_url(@user.cards.first)
     assert_response :success
   end
 
@@ -58,7 +59,8 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not show card box from another user" do
-    @user2_card = Card.create!(word: "word", definition: "definition", leitner_card_box: @user2.leitner_card_boxes.first, user: @user2)
+    new_user = User.create!(email: 'new_user@example.com', password: 'password', password_confirmation: 'password')
+    @user2_card = Card.create!(word: "word", definition: "definition", leitner_card_box: new_user.leitner_card_boxes.first, user: new_user)
 
     get card_url(@user2_card)
     assert_redirected_to cards_url
