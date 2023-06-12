@@ -3,11 +3,11 @@
 one:
   word: MyString
   definition: MyText
-  leitner_card_box: one
+  leitner_card_box: box1
   user: one
 
 two:
   word: MyString
   definition: MyText
-  leitner_card_box: two
+  leitner_card_box: box1
   user: two
