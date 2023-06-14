@@ -60,6 +60,25 @@ class CardsController < ApplicationController
     end
   end
 
+  def learn
+    # Get the cards in the first box
+    @cards = current_user.cards.joins(:leitner_card_box).where('leitner_card_boxes.repeat_period = ?', 1)
+    # Select a random card
+    @card = @cards.sample
+  end
+  
+  def remember
+    @card = current_user.cards.find(params[:id])
+    @card.remember
+    redirect_to learn_cards_path
+  end
+  
+  def forget
+    @card = current_user.cards.find(params[:id])
+    @card.forget
+    redirect_to learn_cards_path
+  end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_card

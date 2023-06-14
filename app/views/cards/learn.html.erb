@@ -1,0 +1,14 @@
+<% if @card %>
+  <h1>Guess the definition:</h1>
+  <p><%= @card.word %></p>
+
+  <%= form_with(url: remember_card_path(@card), local: true) do %>
+    <%= submit_tag "I remember" %>
+  <% end %>
+
+  <%= form_with(url: forget_card_path(@card), local: true) do %>
+    <%= submit_tag "I forgot" %>
+  <% end %>
+<% else %>
+  <h1>No more cards to learn today</h1>
+<% end %>
