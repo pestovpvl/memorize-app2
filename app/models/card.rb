@@ -9,7 +9,7 @@ class Card < ApplicationRecord
       # Move to the next box
       self.update(
         leitner_card_box: next_box,
-        updated_at: Time.now
+        last_reviewed_at: Time.current
       )
     else
       # No next box, remove the card
@@ -21,7 +21,7 @@ class Card < ApplicationRecord
     # Move back to the first box
     self.update(
       leitner_card_box: LeitnerCardBox.first_box(user),
-      updated_at: Time.now
+      last_reviewed_at: Time.current
     )
   end
 end

@@ -61,9 +61,8 @@ class CardsController < ApplicationController
   end
 
   def learn
-    # Get the cards in the first box
-    @cards = current_user.cards.joins(:leitner_card_box).where('leitner_card_boxes.repeat_period = ?', 1)
-    # Select a random card
+    @cards = current_user.cards.joins(:leitner_card_box)
+        .select { |card| card.last_reviewed_at.nil? || (Time.current - card.last_reviewed_at) >= card.leitner_card_box.repeat_period.days }
     @card = @cards.sample
   end
   
