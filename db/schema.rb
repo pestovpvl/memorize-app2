@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_152121) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_124704) do
   create_table "cards", force: :cascade do |t|
     t.string "word"
     t.text "definition"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_152121) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_reviewed_at"
     t.index ["leitner_card_box_id"], name: "index_cards_on_leitner_card_box_id"
     t.index ["user_id"], name: "index_cards_on_user_id"
   end
