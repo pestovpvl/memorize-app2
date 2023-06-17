@@ -20,6 +20,12 @@ class LeitnerCardBox < ApplicationRecord
     user.leitner_card_boxes.order(:repeat_period).first
   end
 
+  def self.prev_box(user, current_box)
+    # You might want to limit the number of boxes.
+    # Here it's assumed that the box with the lower repeat_period is the previous box.
+    user.leitner_card_boxes.where('repeat_period < ?', current_box.repeat_period).order(:repeat_period).last
+  end
+
   private
 
   def remove_associated_cards

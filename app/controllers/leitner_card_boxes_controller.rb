@@ -1,6 +1,7 @@
 class LeitnerCardBoxesController < ApplicationController
   before_action :set_leitner_card_box, only: %i[ show edit update destroy ]
   before_action :require_owner, only: %i[ show edit update destroy ]
+  before_action :move_card_to_prev_box, only: %i[ destroy ]
 
   # GET /leitner_card_boxes or /leitner_card_boxes.json
   def index
@@ -74,5 +75,11 @@ class LeitnerCardBoxesController < ApplicationController
       unless current_user == @leitner_card_box.user
         redirect_to leitner_card_boxes_url, notice: "You are not authorized to do that."
       end
+    end
+
+    def move_card_to_prev_box
+      # Move cards to the prev box before destroying the box.
+      # This is done to prevent orphan cards.
+      @leitner_card_box.cards.update_all(leitner_card_box_id: LeitnerCardBox.prev_box(current_user, @leitner_card_box).id)
     end
 end
