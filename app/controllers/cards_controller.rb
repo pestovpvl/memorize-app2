@@ -1,4 +1,7 @@
+require 'csv'
+
 class CardsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_card, only: %i[ show edit update destroy ]
   before_action :require_owner, only: %i[ show edit update destroy ]
 
@@ -76,8 +79,46 @@ class CardsController < ApplicationController
     @card = current_user.cards.find(params[:id])
     @card.forget
     redirect_to learn_cards_path
-  end  
+  end
 
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:error] = "You must select a file first"
+    else
+      new_cards_count = 0
+      updated_cards_count = 0
+      error_count = 0
+  
+      begin
+        ActiveRecord::Base.transaction do
+          CSV.foreach(file.path, headers: true) do |row|
+            card = Card.find_or_initialize_by(
+              word: row[2].strip, 
+              user: current_user, 
+              leitner_card_box: current_user.leitner_card_boxes.find_by(repeat_period: 1)
+            )
+            card.definition = row[3]
+            if card.new_record?
+              new_cards_count += 1 if card.save
+            else
+              updated_cards_count += 1 if card.save
+            end
+          rescue => e
+            error_count += 1 # increment error count
+            Rails.logger.error "Failed to import card: #{e.message}"
+            next
+          end
+        end
+  
+        flash[:notice] = "Successfully imported #{new_cards_count} new cards and updated #{updated_cards_count} existing cards. Failed to import #{error_count} cards."
+      rescue StandardError => e
+        flash[:error] = "Error importing cards: #{e.message}"
+      end
+    end
+    redirect_back(fallback_location: cards_path)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_card

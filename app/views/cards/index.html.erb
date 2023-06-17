@@ -2,6 +2,25 @@
 
 <h1>Cards</h1>
 
+
+<h3>Learn cards</h3>
+
+<%= link_to "Learn", learn_cards_path, class: "btn btn-dark" %>
+
+
+<h3>Import cards</h3>
+
+<%= form_with url: import_cards_path, method: :post, local: true, multipart: true do |form| %>
+  <div class="form-group">
+    <%= form.label :file %>
+    <%= file_field_tag :file, required: true, class: "form-control" %>
+  </div>
+  <%= form.submit "Import", class: "btn btn-primary" %>
+<% end %>
+
+
+<h3>My cards</h3>
+
 <div id="cards" class="row">
   <% @cards.each do |card| %>
     <%= render card %>
