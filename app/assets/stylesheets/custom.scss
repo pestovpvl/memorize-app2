@@ -1,3 +1,34 @@
 #main-wrap {
   min-height: calc(100vh - 130px);
 }
+
+.alert-success {
+  color: white;
+}
+
+nav {
+  .navbar-toggler-icon {
+    background-color: azure;
+  }
+  
+  .navbar-brand, a {
+    color: white !important;
+  }
+  form {
+    background: white;
+    border-radius: 4px;
+    padding: 3px 0px 0 10px;
+  }
+  
+  .dropdown-menu.show {
+    background-color: white !important;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 0;
+    position: absolute !important;
+    top: 30px;
+    a {
+      color: #000 !important;
+    }  
+  }
+}

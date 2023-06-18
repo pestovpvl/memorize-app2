@@ -1,11 +1,17 @@
-<div id="<%= dom_id leitner_card_box %>" class="card col-3 mt-4 d m-auto" style="width: 18rem;">
+<div id="<%= dom_id leitner_card_box %>" class="card col-lg-3 mt-4 mx-2">
   <div class="card-body">
     <h5 class="leitner-card-box__repeat_period">Repeat period:<%= leitner_card_box.repeat_period %></h5>
-    <ul>
-      <% leitner_card_box.cards.each do |card| %>
-        <li><%= card.word %></li>
-      <% end %>
-    </ul>
+    <h6> Card boxes: <%= leitner_card_box.cards.count %></h6>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#card_box_collapse_<%= leitner_card_box.id %>" role="button" aria-expanded="false" aria-controls="card_box_collapse_<%= leitner_card_box.id %>">
+      Show cards
+    </a>
+    <div class="collapse" id="card_box_collapse_<%= leitner_card_box.id %>">
+      <ul>
+        <% leitner_card_box.cards.each do |card| %>
+          <li><%= card.word %></li>
+        <% end %>
+      </ul>
+    </div>
     <%= link_to 'Show', leitner_card_box %>
     <%= link_to 'Edit', edit_leitner_card_box_path(leitner_card_box) %>
     <%= link_to 'Destroy', leitner_card_box, data: { confirm: 'Are you sure?' }, method: :delete %>

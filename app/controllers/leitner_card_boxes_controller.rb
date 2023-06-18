@@ -28,7 +28,7 @@ class LeitnerCardBoxesController < ApplicationController
 
     respond_to do |format|
       if @leitner_card_box.save
-        format.html { redirect_to leitner_card_box_url(@leitner_card_box), notice: "Leitner card box was successfully created." }
+        format.html { redirect_to leitner_card_boxes_path, notice: "Leitner card box was successfully created." }
         format.json { render :show, status: :created, location: @leitner_card_box }
       else
         format.html { render :new, status: :unprocessable_entity }

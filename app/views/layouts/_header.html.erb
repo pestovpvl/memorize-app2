@@ -1,29 +1,18 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
   <div class="container-fluid">
-      <%= link_to "sample app", root_path, id: "logo", class: "navbar-brand" %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <%= link_to "Memorize App", root_path, 
+    class: "navbar-brand", 
+    rel: "tooltip", 
+    title: "Memorize app. Help you to memorize anything!", 
+    data: { placement: "bottom" } %>
 
-      <div class="collapse navbar-collapse" id="navbarsExample04">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <!-- ToDo: implement 'active' class and aria-current="page" for links -->
-            <%= link_to "Home", root_path, class: "nav-link" %>
-          </li>
-          <% if current_user %>
-            <li class="nav-item"><%= link_to "Cards", cards_path, class: 'nav-link' %></li>
-            <li class="nav-item"><%= link_to "Leitner Memory Cards", leitner_card_boxes_path, class: 'nav-link' %></li>
-            <li class="divider"></li>
-            <li class="nav-item"><%= link_to "Logout", destroy_user_session_path, data: {turbo_method: :delete}, class: "nav-link" %></li>
-          <% else %>
-            <li class="nav-item"><%= link_to "Log in", new_user_session_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to "Sign up", new_user_registration_path, class: "nav-link" %></li>
-          <% end %>
-        </ul>
-        <form role="search">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        </form>
-      </div>
-    </div>
+    <% if current_user %>
+      <%= link_to "Learn", learn_cards_path, class: 'nav-link' %>
+      <%= link_to "Cards", cards_path, class: 'nav-link' %>
+      <%= link_to "Card boxes", leitner_card_boxes_path, class: 'nav-link' %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path, class: "btn bg-gradient-primary mb-0" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "btn bg-gradient-primary ms-3 mb-0" %>
+    <% end %>
+  </div>
 </nav>

@@ -1,0 +1,16 @@
+<div class="row">
+  <% @memory_systems.each do |memory_system| %>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-profile">
+        <div class="card-body">
+          <h4 class="card-title"><%= memory_system[0] %></h4>
+          <p class="card-description">
+            <%= memory_system[1] %>
+          </p>
+          <%= link_to "Learn", learn_cards_path, class: "btn btn-primary btn-round" %>
+          <%= link_to "show card boxes", leitner_card_boxes_path, class: "btn btn-info btn-round" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
