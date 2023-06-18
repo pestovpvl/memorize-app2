@@ -2,7 +2,7 @@
 <h1>Leitner card boxes</h1>
 
 <div id="leitner_card_boxes" class="row">
-  <% @leitner_card_boxes.each do |leitner_card_box| %>
+  <% @leitner_card_boxes.order(:repeat_period).each do |leitner_card_box| %>
     <%= render leitner_card_box %>
   <% end %>
 </div>

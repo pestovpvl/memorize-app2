@@ -1,14 +1,25 @@
 <% if @card %>
-  <h1>Guess the definition:</h1>
+  <h6>Guess the definition:</h6>
   <p><%= @card.word %></p>
 
+  <div class="d-flex">
   <%= form_with(url: remember_card_path(@card), local: true) do %>
-    <%= submit_tag "I remember" %>
+    <%= submit_tag "I remember", class: 'btn btn btn-dark' %>
   <% end %>
 
   <%= form_with(url: forget_card_path(@card), local: true) do %>
-    <%= submit_tag "I forgot" %>
+    <%= submit_tag "I forgot", class: 'btn btn btn-dark mx-3' %>
   <% end %>
+  </div>
+
+  <div class="dropdown mt-4">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Definition
+  </button>
+  <ul class="dropdown-menu">
+    <li class="dropdown-item"><%= @card.definition %></li>
+  </ul>
+</div>
 <% else %>
   <h1>No more cards to learn today</h1>
 <% end %>
