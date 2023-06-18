@@ -28,7 +28,7 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
       post leitner_card_boxes_url, params: { leitner_card_box: { repeat_period: @leitner_card_box.repeat_period, user_id: @leitner_card_box.user_id } }
     end
 
-    assert_redirected_to leitner_card_box_url(LeitnerCardBox.last)
+    assert_redirected_to leitner_card_boxes_url
   end
 
   test "should show leitner_card_box" do
@@ -49,10 +49,11 @@ class LeitnerCardBoxesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy leitner_card_box" do
+    leitner_card_box_to_delete = LeitnerCardBox.create!(repeat_period: 10, user: @user)
     assert_difference("LeitnerCardBox.count", -1) do
-      delete leitner_card_box_url(@user.leitner_card_boxes.first)
+      delete leitner_card_box_url(leitner_card_box_to_delete)
     end
-
+  
     assert_redirected_to leitner_card_boxes_url
   end
 

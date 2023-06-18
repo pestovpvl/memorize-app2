@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  root "cards#index"
+  
   resources :leitner_card_boxes
   resources :cards do
     collection do
@@ -10,9 +13,7 @@ Rails.application.routes.draw do
       post :forget
     end
   end
+  
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  root "cards#index"
+  get 'memory_systems', to: 'memory_systems#index'
 end
