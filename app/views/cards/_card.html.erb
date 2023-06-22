@@ -1,10 +1,12 @@
-<div id="<%= dom_id card %>" class="card col-3 mt-4 d m-auto" style="width: 18rem;">
+<div id="<%= dom_id card %>" class="card col-12 col-md-3 mt-4 d m-auto" >
   <div class="card-body">
     <h5 class="card-word"><%= card.word %></h5>
     <p class="card-definition"><%= card.definition %></p>
     <p class="card-leitner-card-box-id"> Repeat period: <%= card.leitner_card_box_id %></p>
-    <%= link_to 'Show', card %>
-    <%= link_to 'Edit', edit_card_path(card) %>
-    <%= link_to 'Destroy', card, data: { confirm: 'Are you sure?' }, method: :delete %>
+    <%= link_to 'Edit', edit_card_path(card), class: 'btn btn-outline-secondary' %>
+    <%= link_to "Destroy Card", [card], data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    }, class: 'btn btn-outline-danger' %>
   </div>
 </div>

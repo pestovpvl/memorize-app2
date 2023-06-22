@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root "cards#index"
+  root "cards#learn"
   
   resources :leitner_card_boxes
   resources :cards do

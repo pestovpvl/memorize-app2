@@ -12,14 +12,18 @@
   <% end %>
   </div>
 
-  <div class="dropdown mt-4">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-  Definition
-  </button>
-  <ul class="dropdown-menu">
-    <li class="dropdown-item"><%= @card.definition %></li>
-  </ul>
-</div>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-underline" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          Definition
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body text-dark"><%= @card.definition %></div>
+    </div>
+  </div>
+
 <% else %>
   <h1>No more cards to learn today</h1>
 <% end %>

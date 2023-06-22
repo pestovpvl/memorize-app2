@@ -1,11 +1,18 @@
 <% flash.each do |message_type, message| %>
   <% if message_type == "alert" %>
-    <div class="alert alert-warning"><%= message %></div>
+    <div class="alert alert-warning alert-dismissible fade show"><%= message %></div>
   <% elsif message_type == "notice" %>
-    <div class="alert alert-success"><%= message %></div>
+    <div class="alert alert-success alert-dismissible fade show"><%= message %></div>
   <% elsif message_type == "error" %> 
-    <div class="alert alert-danger"><%= message %></div>
+    <div class="alert alert-danger alert-dismissible fade show"><%= message %></div>
   <% else %>
-    <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <div class="alert alert-<%= message_type %> alert-dismissible fade show"><%= message %></div>
   <% end %>
+  <script>
+  $('document').ready(function() {
+    setTimeout(function() {
+      $('.alert').slideUp();
+    }, 3000);
+  });
+  </script>
 <% end %>
