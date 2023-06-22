@@ -1,25 +1,14 @@
-
-<h1>Cards</h1>
-
-
-<h3>Learn cards</h3>
-
-<%= link_to "Learn", learn_cards_path, class: "btn btn-dark" %>
-
-
 <h3>Import cards</h3>
-
+<p> Import cards from a CSV file. The file must be an export file from Google translate </p>
 <%= form_with url: import_cards_path, method: :post, local: true, multipart: true do |form| %>
-  <div class="form-group">
-    <%= form.label :file %>
+  <div class="form-group input-group">
+    <%= form.label :file, class: 'form-label' %>
     <%= file_field_tag :file, required: true, class: "form-control" %>
   </div>
-  <%= form.submit "Import", class: "btn btn-primary" %>
+  <%= form.submit "Import", class: "btn btn-primary mt-2" %>
 <% end %>
-
-
-<h3>My cards</h3>
-
+<br/>
+<h3>Cards</h3>
 <div id="cards" class="row">
   <% @cards.each do |card| %>
     <%= render card %>

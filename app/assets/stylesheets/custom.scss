@@ -2,33 +2,18 @@
   min-height: calc(100vh - 130px);
 }
 
-.alert-success {
+.alert {
   color: white;
 }
 
-nav {
-  .navbar-toggler-icon {
-    background-color: azure;
+.form-control {
+  &::file-selector-button {
+    background: #03a9f4;
+    padding: 9px 16px;
+    border-radius: 8px 0px 0px 8px;
+    color: white;
   }
-  
-  .navbar-brand, a {
-    color: white !important;
-  }
-  form {
-    background: white;
-    border-radius: 4px;
-    padding: 3px 0px 0 10px;
-  }
-  
-  .dropdown-menu.show {
-    background-color: white !important;
-    border: 1px solid white;
-    border-radius: 4px;
-    padding: 0;
-    position: absolute !important;
-    top: 30px;
-    a {
-      color: #000 !important;
-    }  
+  &:hover:not(:disabled):not([readonly])::file-selector-button {
+    background: #03a9f4;
   }
 }
