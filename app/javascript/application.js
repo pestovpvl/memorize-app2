@@ -8,3 +8,4 @@ window.$ = jquery
 
 import "bootstrap"
 import "@popperjs/core"
+import "custom"
