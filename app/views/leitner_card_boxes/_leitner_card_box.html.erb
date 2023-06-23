@@ -1,4 +1,4 @@
-<div id="<%= dom_id leitner_card_box %>" class="card col-lg-3 mt-4 mx-2">
+<div id="<%= dom_id leitner_card_box %>" class="card col-lg-3 mt-3">
   <div class="card-body">
     <h5 class="leitner-card-box__repeat_period">Repeat period:<%= leitner_card_box.repeat_period %></h5>
     <h6> Card boxes: <%= leitner_card_box.cards.count %></h6>
@@ -12,7 +12,8 @@
         <% end %>
       </ul>
     </div>
-    <%= link_to 'Show', leitner_card_box %>
+
+
     <%= link_to 'Edit', edit_leitner_card_box_path(leitner_card_box) %>
     <%= link_to 'Destroy', leitner_card_box, data: { confirm: 'Are you sure?' }, method: :delete %>
   </div>
