@@ -10,13 +10,13 @@
   </div>
 
   <div class="d-flex">
-  <%= form_with(url: remember_card_path(@card), local: true) do %>
-    <%= submit_tag "I remember", class: 'btn btn btn-dark' %>
-  <% end %>
+    <%= form_with(url: remember_card_path(@card), local: true) do %>
+      <%= submit_tag "I remember", class: 'btn btn btn-dark' %>
+    <% end %>
 
-  <%= form_with(url: forget_card_path(@card), local: true) do %>
-    <%= submit_tag "I forgot", class: 'btn btn btn-dark mx-3' %>
-  <% end %>
+    <%= form_with(url: forget_card_path(@card), local: true) do %>
+      <%= submit_tag "I forgot", class: 'btn btn btn-dark mx-3' %>
+    <% end %>
   </div>
 
   <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -27,9 +27,10 @@
         </button>
       </h2>
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body text-dark"><%= @card.definition %></div>
-    </div>
-  </div>
+        <div class="accordion-body text-dark"><%= @card.definition %></div>
+      </div>
+    </div> <!-- Closing tag for accordion-item -->
+  </div> <!-- Closing tag for accordion -->
 
 <% else %>
   <h1>No more cards to learn today</h1>
