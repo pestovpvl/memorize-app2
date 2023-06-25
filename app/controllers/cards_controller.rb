@@ -28,7 +28,6 @@ class CardsController < ApplicationController
     @card = Card.new(card_params)
     @card.user = current_user
     @card.leitner_card_box = LeitnerCardBox.where(repeat_period: LeitnerCardBox.minimum(:repeat_period)).first
-    
     respond_to do |format|
       if @card.save
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
@@ -64,10 +63,11 @@ class CardsController < ApplicationController
   end
 
   def learn
-    @cards = current_user.cards.joins(:leitner_card_box)
-        .select { |card| card.last_reviewed_at.nil? || (Time.current - card.last_reviewed_at) >= card.leitner_card_box.repeat_period.days }
+    @cards = current_user.cards.joins(:leitner_card_box).where('cards.last_reviewed_at IS NULL OR (julianday("now") - julianday(cards.last_reviewed_at)) >= leitner_card_boxes.repeat_period')
+  
     @card = @cards.sample
   end
+  
   
   def remember
     @card = current_user.cards.find(params[:id])
@@ -78,6 +78,7 @@ class CardsController < ApplicationController
   def forget
     @card = current_user.cards.find(params[:id])
     @card.forget
+    flash[:alert] = "#{@card.word}: #{ @card.definition }"
     redirect_to learn_cards_path
   end
 
