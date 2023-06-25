@@ -63,8 +63,9 @@ class CardsController < ApplicationController
   end
 
   def learn
-    @cards = current_user.cards.joins(:leitner_card_box).where('cards.last_reviewed_at IS NULL OR (julianday("now") - julianday(cards.last_reviewed_at)) >= leitner_card_boxes.repeat_period')
-  
+    current_date = Time.current
+    @cards = current_user.cards.joins(:leitner_card_box)
+                 .where("cards.last_reviewed_at IS NULL OR (EXTRACT(EPOCH FROM (? - cards.last_reviewed_at))/86400)::integer >= leitner_card_boxes.repeat_period", current_date)
     @card = @cards.sample
   end
   

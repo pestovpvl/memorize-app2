@@ -11,11 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_15_124704) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cards", force: :cascade do |t|
     t.string "word"
     t.text "definition"
-    t.integer "leitner_card_box_id"
-    t.integer "user_id", null: false
+    t.bigint "leitner_card_box_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_reviewed_at"
@@ -25,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_124704) do
 
   create_table "leitner_card_boxes", force: :cascade do |t|
     t.integer "repeat_period"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_leitner_card_boxes_on_user_id"
