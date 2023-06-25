@@ -8,6 +8,7 @@
   <%= form.submit "Import", class: "btn btn-primary mt-2" %>
 <% end %>
 <br/>
+<%= link_to "Create new card", new_card_path, class: "btn btn-dark" %>
 <h3>Cards</h3>
 <div id="cards" class="row">
   <% @cards.each do |card| %>

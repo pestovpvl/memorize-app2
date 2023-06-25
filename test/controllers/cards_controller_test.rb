@@ -1,4 +1,5 @@
 require "test_helper"
+require 'pry'
 
 class CardsControllerTest < ActionDispatch::IntegrationTest
   # Include Devise test helpers
@@ -8,7 +9,8 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
 
     @user = User.create!(email: 'user1@gmail.com', password: 'password', password_confirmation: 'password')
     @user2 = User.create!(email: 'user2@gmail.com', password: 'password', password_confirmation: 'password')
-    @card = Card.create!(word: "word", definition: "definition", leitner_card_box: @user.leitner_card_boxes.first, user: @user)
+    @leitner_box = @user.leitner_card_boxes.first
+    @card = Card.create!(word: "word", definition: "definition", leitner_card_box: @leitner_box, user: @user)
 
     sign_in @user
   end
@@ -64,5 +66,47 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
 
     get card_url(@user2_card)
     assert_redirected_to cards_url
+  end
+
+  test "learn should get learn" do
+    get learn_cards_url
+    assert_response :success
+  end
+
+  test 'should return card that was reviewed exactly one day ago' do
+    @card.update(last_reviewed_at: (1.day.ago - 10.seconds))
+
+    get learn_cards_url
+    assert_response :success
+
+    assert_includes @response.body, @card.id.to_s
+  end
+
+  test 'should not return card that was just reviewed' do
+    @card.update(last_reviewed_at: Time.current)
+
+    get learn_cards_url
+    assert_response :success
+
+    assert_not_includes @response.body, @card.id.to_s
+  end
+
+  test 'should return card that was never reviewed' do
+    @card.update(last_reviewed_at: nil)
+
+    get learn_cards_url
+    assert_response :success
+
+    assert_includes @response.body, @card.id.to_s
+  end
+
+  test 'should not return card that is not due for review yet' do
+    @card.update(last_reviewed_at: Time.now)
+    @card.leitner_card_box.update(repeat_period: 3)
+
+    get learn_cards_url
+    assert_response :success
+
+    assert_not_includes @response.body, @card.id.to_s
   end
 end
