@@ -1,0 +1,9 @@
+<% if !media.empty? %>
+  <div class="d-flex flex-wrap">
+    <% media.each do |url| %>
+      <img src="<%= url %>" alt="media" class="img-fluid m-2" style="width: 200px; height: 200px;">
+    <% end %>
+  </div>
+<% else %>
+  <p>No media found</p>
+<% end %>
