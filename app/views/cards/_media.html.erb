@@ -2,7 +2,7 @@
   <div class="d-flex flex-wrap">
     <% media.each do |url| %>
       <div class="col-12 col-md-6 col-lg-4">
-        <img src='<%= url %>' alt="media" class="img-fluid m-2" style="width: 100%; object-fit: cover;">
+        <img src='<%= url %>' loading="lazy" alt="media" class="img-fluid m-2" style="width: 100%; object-fit: cover;">
       </div>
     <% end %>
   </div>
