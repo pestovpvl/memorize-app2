@@ -1,0 +1,2 @@
+module GptApiHelper
+end
