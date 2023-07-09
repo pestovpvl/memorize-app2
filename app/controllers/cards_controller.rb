@@ -79,7 +79,7 @@ class CardsController < ApplicationController
   def forget
     @card = current_user.cards.find(params[:id])
     @card.forget
-    flash[:alert] = "#{@card.word}: #{ @card.definition }"
+    # flash[:alert] = "#{@card.word}: #{ @card.definition }"
     redirect_to learn_cards_path
   end
 
