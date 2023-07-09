@@ -15,7 +15,11 @@ class MediaService
     key = '&key=LIVDSRZULELA'
     encoded_word = CGI.escape(word)
     url_query = "https://g.tenor.com/v1/search?q=#{encoded_word}&#{key}&limit=#{limit}"
-    response = Faraday.get(url_query)
+    begin
+      response = Faraday.get(url_query)
+    rescue Faraday::ConnectionFailed => e
+      return []
+    end
     json = JSON.parse(response.body)
     json['results'].map { |result| result['media'].first[format]['url'] }
   end
