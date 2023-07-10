@@ -21,6 +21,10 @@ class MediaService
       return []
     end
     json = JSON.parse(response.body)
-    json['results'].map { |result| result['media'].first[format]['url'] }
+    if json['results'].nil?
+      return []
+    else
+      json['results'].map { |result| result['media'].first[format]['url'] }
+    end
   end
 end
