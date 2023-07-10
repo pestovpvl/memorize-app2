@@ -1,0 +1,2 @@
+class GptApiController < ApplicationController
+end

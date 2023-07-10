@@ -1,21 +1,27 @@
 <% if @card %>
-  <div id='wrap-word-card-btns' class="d-flex ms-auto">
-    <%= render 'card_buttons', card: @card %>
-  </div>
-
-  <div id='wrap-word-card-elem' class="d-flex py-3">
-    <h3 id="card-word"><%= @card.word %></h3>
-  </div>
-
-  
-  <div class="d-flex">
-  <%= form_with(url: remember_card_path(@card), local: true) do %>
-    <%= submit_tag "I remember", class: 'btn btn btn-success' %>
-  <% end %>
-
-  <%= form_with(url: forget_card_path(@card), local: true) do %>
-    <%= submit_tag "I forgot", class: 'btn btn btn-danger mx-3' %>
-  <% end %>
+  <div class="card w-100">
+    <div class="card-body">
+      <div class="d-flex ms-auto">
+        <%= render 'card_buttons', card: @card %>
+      </div>
+      <h6 class="card-subtitle mb-2 text-body-secondary"><%= @card.word %></h6>
+      <div data-controller="gpt">
+        <button class="btn btn-outline-dark" data-gpt-target="button" data-word='<%= @card.word %>' data-action="click->gpt#generate">Generate sentence</button>
+        <div data-gpt-target="spinner" class="spinner-border text-light py-2" role="status" style="display: none;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <span data-gpt-target="output" class="d-block pb-2"></span>
+      </div>
+      <div class="d-flex">
+      <%= form_with(url: remember_card_path(@card), local: true) do %>
+        <%= submit_tag "I remember", class: 'btn btn-success' %>
+      <% end %>
+    
+      <%= form_with(url: forget_card_path(@card), local: true) do %>
+        <%= submit_tag "I forgot", class: 'btn btn-danger mx-3' %>
+      <% end %>
+      </div>
+    </div>
   </div>
   
   <details>

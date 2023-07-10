@@ -12,7 +12,7 @@ class MediaService
   end
 
   def self.fetch_media(word, format = 'gif', limit = 8)
-    key = '&key=LIVDSRZULELA'
+    key = "&key=#{ENV['TENOR_API_KEY']}"
     encoded_word = CGI.escape(word)
     url_query = "https://g.tenor.com/v1/search?q=#{encoded_word}&#{key}&limit=#{limit}"
     begin
