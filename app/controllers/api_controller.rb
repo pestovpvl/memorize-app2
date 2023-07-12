@@ -14,7 +14,7 @@ class ApiController < ApplicationController
 
     response = conn.post do |req|
       req.body = {
-        "max_tokens": 5,
+        "max_tokens": 50,
         "model": "gpt-3.5-turbo",
         "temperature": 0.9,
         "top_p": 1,
@@ -23,7 +23,7 @@ class ApiController < ApplicationController
         "messages": [
           {
             role: 'user',
-            content: "I am looking for a single sentence definition of the word '#{message}'. Please do not include any additional information or commentary. Just the definition. Thank you!"
+            content: "Generate meaningful sentences where the word '#{message}' used. Please do not include any additional information or commentary. Just the sentence."
           }
         ],
         "stop": ["\n", " Human:", " AI:"]
@@ -38,6 +38,6 @@ class ApiController < ApplicationController
       puts "Request failed with status code #{response.status}"
       @result = [] # Set default value or handle the error case appropriately
     end
-    render json: { result: @result }
+    render json: { result: @result}
   end
 end
